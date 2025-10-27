@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BensGotBuns — Ben Invests For You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg1:#041024;
+      --bg2:#06243a;
+      --accent:#38b6ff;
+      --muted:#9fb4c9;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      color:#eaf6ff;
+      background:linear-gradient(180deg,var(--bg1),var(--bg2) 70%);
+      line-height:1.4;
+    }
+    header,footer,main{max-width:1100px;margin:auto;padding:24px;}
+    header{
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    h1{margin:0;font-size:20px}
+    nav a{color:var(--muted);text-decoration:none;margin:0 10px;font-weight:600;}
+    .cta{background:var(--accent);color:#001e2b;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:700;}
+    main{
+      display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;
+    }
+    @media(max-width:800px){main{grid-template-columns:1fr}}
+    .card{
+      background:rgba(255,255,255,0.05);
+      border-radius:12px;padding:20px;
+    }
+    .charts{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    canvas{width:100%;height:200px;background:transparent;}
+    footer{text-align:center;color:var(--muted);font-size:14px;}
+    .email{color:#38b6ff;text-decoration:none;}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BensGotBuns</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#charts">Charts</a>
+      <a href="#contact">Contact</a>
+      <a class="cta" href="#contact">Get Started</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about" class="card">
+      <h2>Ben will invest for you</h2>
+      <p>The greatest investment for your money. Smart, transparent, and designed for your success.</p>
+    </section>
+
+    <section id="charts" class="card">
+      <h3>Sample Performance</h3>
+      <div class="charts">
+        <canvas id="pieChart"></canvas>
+        <canvas id="barChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <section id="contact" class="card" style="max-width:1100px;margin:20px auto;">
+    <h3>Contact</h3>
+    <p>For inquiries, email us at: <a class="email" href="mailto:lil.jjd2n3@gmail.com">lil.jjd2n3@gmail.com</a></p>
+  </section>
+
+  <footer>
+    © <span id="year"></span> BensGotBuns — Demo Investment Site
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    new Chart(document.getElementById("pieChart"), {
+      type: "pie",
+      data: {
+        labels: ["Equities", "Fixed Income", "Cash", "Alt"],
+        datasets: [{
+          data: [45, 25, 20, 10],
+          backgroundColor: ["#38b6ff","#0ea5a4","#7bd3ff","#94a3b8"],
+          borderWidth: 0
+        }]
+      },
+      options: {plugins:{legend:{position:"bottom",labels:{color:"#cfefff"}}}}
+    });
+
+    new Chart(document.getElementById("barChart"), {
+      type: "bar",
+      data: {
+        labels: ["Q1","Q2","Q3","Q4"],
+        datasets: [{
+          data: [3.5, 5.2, 4.8, 6.1],
+          backgroundColor: "#38b6ff",
+          borderRadius: 6,
+          barThickness: 24
+        }]
+      },
+      options: {
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:"#cfefff"}},
+          y:{ticks:{color:"#cfefff"},beginAtZero:true}
+        }
+      }
+    });
+  </script>
+</body>
+</html>
