@@ -2,52 +2,77 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BensGotBuns — Ben Invests For You</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg1:#041024;
-      --bg2:#06243a;
-      --accent:#38b6ff;
-      --muted:#9fb4c9;
+      --bg1: #041024;
+      --bg2: #06243a;
+      --accent: #38b6ff;
+      --muted: #9fb4c9;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      color:#eaf6ff;
-      background:linear-gradient(180deg,var(--bg1),var(--bg2) 70%);
-      line-height:1.5;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #eaf6ff;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2) 70%);
+      line-height: 1.5;
     }
-    header,footer,main{max-width:1100px;margin:auto;padding:24px;}
-    header{
-      display:flex;align-items:center;justify-content:space-between;
+    header, footer, main { max-width: 1100px; margin: auto; padding: 24px; }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    h1{margin:0;font-size:20px}
-    nav a{color:var(--muted);text-decoration:none;margin:0 10px;font-weight:600;}
-    .cta{background:var(--accent);color:#001e2b;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:700;}
-    main{
-      display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;
+    h1 { margin: 0; font-size: 20px; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 600;
     }
-    @media(max-width:800px){main{grid-template-columns:1fr}}
-    .card{
-      background:rgba(255,255,255,0.05);
-      border-radius:12px;padding:20px;
+    .cta {
+      background: var(--accent);
+      color: #001e2b;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
     }
-    footer{text-align:center;color:var(--muted);font-size:14px;}
-    .email{color:#38b6ff;text-decoration:none;}
-    .testimonial{
-      font-style:italic;
-      color:#d0e8ff;
-      border-left:4px solid var(--accent);
-      padding-left:16px;
-      margin:16px 0;
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
     }
-    .client-name{
-      margin-top:8px;
-      font-weight:600;
-      color:var(--accent);
+    @media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    footer { text-align: center; color: var(--muted); font-size: 14px; }
+    .email { color: #38b6ff; text-decoration: none; }
+    canvas {
+      width: 100%;
+      height: 240px;
+      max-height: 240px;
+      background: transparent;
+      display: block;
+    }
+    .testimonial {
+      font-style: italic;
+      color: #d0e8ff;
+      border-left: 4px solid var(--accent);
+      padding-left: 16px;
+      margin: 16px 0;
+    }
+    .client-name {
+      margin-top: 8px;
+      font-weight: 600;
+      color: var(--accent);
     }
   </style>
 </head>
@@ -56,6 +81,7 @@
     <h1>BensGotBuns</h1>
     <nav>
       <a href="#about">About</a>
+      <a href="#charts">Charts</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
       <a class="cta" href="#contact">Get Started</a>
@@ -68,14 +94,20 @@
       <p>The greatest investment for your money. Smart, transparent, and designed for your success. Ben provides personalized, thoughtful strategies to help you reach your goals confidently.</p>
     </section>
 
-    <section id="testimonials" class="card">
-      <h3>What Our Clients Say</h3>
-      <div class="testimonial">
-        “Ben was absolutely fantastic to work with. He took the time to understand my goals and made everything simple and stress-free. I’ve already seen great results and will definitely come back for future investments!”
-      </div>
-      <div class="client-name">— Jordan M.</div>
+    <section id="charts" class="card">
+      <h3>Performance Overview</h3>
+      <canvas id="pieChart"></canvas>
+      <canvas id="barChart" style="margin-top: 20px;"></canvas>
     </section>
   </main>
+
+  <section id="testimonials" class="card" style="max-width:1100px;margin:20px auto;">
+    <h3>What Our Clients Say</h3>
+    <div class="testimonial">
+      “Ben was absolutely fantastic to work with. He took the time to understand my goals and made everything simple and stress-free. I’ve already seen great results and will definitely come back for future investments!”
+    </div>
+    <div class="client-name">— Jordan M.</div>
+  </section>
 
   <section id="contact" class="card" style="max-width:1100px;margin:20px auto;">
     <h3>Contact</h3>
@@ -86,9 +118,56 @@
     © <span id="year"></span> BensGotBuns — Demo Investment Site
   </footer>
 
+  <!-- ✅ Chart.js (static, no animation, no resizing bug) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const chartOptions = {
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false
+    };
+
+    // PIE CHART
+    new Chart(document.getElementById("pieChart"), {
+      type: "pie",
+      data: {
+        labels: ["Equities", "Bonds", "Cash", "Alternatives"],
+        datasets: [{
+          data: [45, 25, 20, 10],
+          backgroundColor: ["#38b6ff","#0ea5a4","#7bd3ff","#94a3b8"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        ...chartOptions,
+        plugins: { legend: { position: "bottom", labels: { color: "#cfefff" } } }
+      }
+    });
+
+    // BAR CHART
+    new Chart(document.getElementById("barChart"), {
+      type: "bar",
+      data: {
+        labels: ["Q1", "Q2", "Q3", "Q4"],
+        datasets: [{
+          label: "Return (%)",
+          data: [3.2, 4.6, 5.1, 6.0],
+          backgroundColor: "#38b6ff",
+          borderRadius: 8,
+          barThickness: 30
+        }]
+      },
+      options: {
+        ...chartOptions,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: "#cfefff" }, grid: { color: "rgba(255,255,255,0.05)" } },
+          y: { ticks: { color: "#cfefff" }, grid: { color: "rgba(255,255,255,0.05)" }, beginAtZero: true }
+        }
+      }
+    });
   </script>
 </body>
 </html>
-
